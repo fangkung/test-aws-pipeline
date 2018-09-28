@@ -27,10 +27,10 @@
 
 version: 0.1
 phases:
-  install:
-    commands:
-    - npm install
-    - npm install -g serverless
+#  install:
+#    commands:
+#    - npm install
+#    - npm install -g serverless
   build:
     commands:
     - bash ./gradlew clean build
