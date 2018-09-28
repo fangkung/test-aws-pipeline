@@ -1,0 +1,35 @@
+#version: 0.1
+#phases:
+#  install:
+#    commands:
+#    - npm install
+#    - npm install -g mocha
+#    - npm install -g serverless
+#  build:
+#    commands:
+#    - serverless deploy --stage cicd | tee deploy.out
+#  post_build:
+#    commands:
+#    - ./test.sh
+
+#version: 0.1
+#phases:
+#  install:
+#    commands:
+#    - npm install
+#    - npm install -g serverless
+#  build:
+#    commands:
+#    - ./node_modules/.bin/serverless deploy --stage cicd | tee deploy.out
+#  post_build:
+#    commands:
+#    - ./test.sh
+
+version: 0.1
+phases:
+  build:
+    commands:
+    - bash ./gradlew clean build
+  post_build:
+    commands:
+    - serverless deploy
