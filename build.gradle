@@ -1,0 +1,33 @@
+plugins {
+    id 'java'
+}
+
+group 'con.poramin'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+// Task for building the zip file for upload
+task buildZip(type: Zip) {
+    baseName = "test"
+    from compileJava
+    from processResources
+    into('lib') {
+        from configurations.runtime
+    }
+}
+
+build.dependsOn buildZip
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '4.7'
+}
+
+dependencies {
+    compile('com.amazonaws:aws-lambda-java-core:1.2.0')
+    testCompile ('junit:junit:4.12')
+}
