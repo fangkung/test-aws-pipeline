@@ -1,39 +1,53 @@
 #version: 0.1
 #phases:
-#  install:
-#    commands:
-#    - npm install
-#    - npm install -g mocha
-#    - npm install -g serverless
 #  build:
 #    commands:
-#    - serverless deploy --stage cicd | tee deploy.out
+#    - bash ./gradlew clean build
 #  post_build:
 #    commands:
-#    - ./test.sh
+#    - serverless deploy
 
-#version: 0.1
-#phases:
-#  install:
-#    commands:
-#    - npm install
-#    - npm install -g serverless
-#  build:
-#    commands:
-#    - ./node_modules/.bin/serverless deploy --stage cicd | tee deploy.out
-#  post_build:
-#    commands:
-#    - ./test.sh
+version: 0.2
+#env:
+#  variables:
+#    JAVA_HOME: "/usr/lib/jvm/java-8-openjdk-amd64"
+#  parameter-store:
+#    LOGIN_PASSWORD: "dockerLoginPassword"
 
-version: 0.1
 phases:
 #  install:
 #    commands:
-#    - npm install
-#    - npm install -g serverless
+#    - echo Entered the install phase...
+#    - apt-get update -y
+#    - apt-get install -y maven
+#    finally:
+#    - echo This always runs even if the update or install command fails
+#  pre_build:
+#    commands:
+#    - echo Entered the pre_build phase...
+#    - docker login –u User –p $LOGIN_PASSWORD
+#    finally:
+#    - echo This always runs even if the login command fails
   build:
     commands:
     - bash ./gradlew clean build
   post_build:
     commands:
+    - serverless config credentials --overwrite --provider aws --profile $KINX_AWS_PROFILE --key $KINX_AWS_KEY --secret $KINX_AWS_SECRET
     - serverless deploy
+#artifacts:
+#  files:
+#  - target/messageUtil-1.0.jar
+#  discard-paths: yes
+#secondary-artifacts:
+#  artifact1:
+#    files:
+#    - target/messageUtil-1.0.jar
+#    discard-paths: yes
+#  artifact2:
+#    files:
+#    - target/messageUtil-1.0.jar
+#    discard-paths: yes
+#cache:
+#  paths:
+#  - '/root/.m2/**/*'
