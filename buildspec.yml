@@ -13,7 +13,6 @@ version: 0.2
 #    JAVA_HOME: "/usr/lib/jvm/java-8-openjdk-amd64"
 #  parameter-store:
 #    LOGIN_PASSWORD: "dockerLoginPassword"
-
 phases:
 #  install:
 #    commands:
@@ -30,10 +29,7 @@ phases:
 #    - echo This always runs even if the login command fails
   build:
     commands:
-    - echo Gradle building...
     - bash ./gradlew clean build
-    finally:
-    - echo Build success
   post_build:
     commands:
     - serverless config credentials --overwrite --provider aws --profile $KINX_AWS_PROFILE --key $KINX_AWS_KEY --secret $KINX_AWS_SECRET
